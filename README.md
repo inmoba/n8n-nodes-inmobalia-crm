@@ -1,5 +1,7 @@
 # n8n-nodes-inmobalia-crm
 
+[![version](https://img.shields.io/npm/v/@inmoba/n8n-nodes-inmobalia-crm.svg)](https://www.npmjs.org/package/@inmoba/n8n-nodes-inmobalia-crm)
+
 n8n nodes for integrating with the Inmobalia CRM real estate platform.
 
 ## Features
