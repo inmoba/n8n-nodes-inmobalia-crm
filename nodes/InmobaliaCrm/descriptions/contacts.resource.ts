@@ -30,6 +30,7 @@ export const contactsFields: INodeProperties[] = [
     displayName: 'Contact ID',
     name: 'contactId',
     type: 'number',
+    placeholder: 'e.g., 12345',
     default: undefined,
     required: true,
     displayOptions: {
