@@ -13,7 +13,7 @@ export async function listContacts(this: IExecuteFunctions, client: HttpClient, 
 		const items = sort.includes('|')
 			? sort.split('|').map((s) => s.trim()).filter(Boolean)
 			: [sort.trim()];
-		(filters as any).sort = items;
+		filters['sort'] = items;
 	}
 
 	const rows = await paginateAll<IDataObject>({

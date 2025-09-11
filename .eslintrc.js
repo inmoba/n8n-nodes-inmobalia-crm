@@ -141,5 +141,15 @@ module.exports = {
 				'n8n-nodes-base/node-param-type-options-password-missing': 'error',
 			},
 		},
+		{
+			files: ['./**/*.ts'],
+			extends: ['plugin:@typescript-eslint/recommended'],
+			plugins: ['@typescript-eslint'],
+			parser: '@typescript-eslint/parser',
+			parserOptions: {
+				projectService: true,
+				tsconfigRootDir: __dirname,
+			},
+		},
 	],
 };

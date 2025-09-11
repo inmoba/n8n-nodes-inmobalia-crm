@@ -1,7 +1,7 @@
 import type { HttpClient } from './client';
 import type { IDataObject } from 'n8n-workflow';
 
-interface PaginateAllParams<T> {
+interface PaginateAllParams {
   client: HttpClient;
   path: string;
   qs?: IDataObject;
@@ -10,12 +10,16 @@ interface PaginateAllParams<T> {
   limit?: number;
 }
 
-export async function paginateAll<T = unknown>(params: PaginateAllParams<T>): Promise<T[]> {
-  const { client, path, unwrap, returnAll } = params;
-  let { qs, limit } = params;
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
 
-  const pageSize = Math.min(200, Number((qs?.size as number) ?? 100));
-  let page = Number((qs?.page as number) ?? 0);
+export async function paginateAll<T = unknown>(params: PaginateAllParams): Promise<T[]> {
+  const { client, path, unwrap, returnAll } = params;
+  const { qs, limit } = params;
+
+  const pageSize = Math.min(200, Number(qs?.size ?? 100));
+  let page = Number(qs?.page ?? 0);
   const results: T[] = [];
 
   const buildQs = () => ({
@@ -27,8 +31,24 @@ export async function paginateAll<T = unknown>(params: PaginateAllParams<T>): Pr
   if (!returnAll) {
     const target = Math.max(1, Number(limit ?? 50));
     while (results.length < target) {
-      const res = await client.get<any>(path, buildQs());
-      const chunk: T[] = unwrap && res?.[unwrap] ? (res[unwrap] as T[]) : (Array.isArray(res) ? res : res?.items ?? []);
+      const res = await client.get<unknown>(path, buildQs());
+      let chunk: T[] = [];
+      if (unwrap && isRecord(res)) {
+        const r = res as Record<string, unknown>;
+        if (Array.isArray(r[unwrap])) {
+          chunk = r[unwrap] as T[];
+        }
+      }
+      if (chunk.length === 0) {
+        if (Array.isArray(res)) {
+          chunk = res as T[];
+        } else if (isRecord(res)) {
+          const r = res as Record<string, unknown>;
+          if (Array.isArray(r.items)) {
+            chunk = r.items as T[];
+          }
+        }
+      }
       if (!chunk?.length) break;
       for (const row of chunk) {
         results.push(row);
@@ -46,8 +66,24 @@ export async function paginateAll<T = unknown>(params: PaginateAllParams<T>): Pr
   const maxPages = 500;
   let pages = 0;
   while (pages < maxPages) {
-    const res = await client.get<any>(path, buildQs());
-    const chunk: T[] = unwrap && res?.[unwrap] ? (res[unwrap] as T[]) : (Array.isArray(res) ? res : res?.items ?? []);
+    const res = await client.get<unknown>(path, buildQs());
+    let chunk: T[] = [];
+    if (unwrap && isRecord(res)) {
+      const r = res as Record<string, unknown>;
+      if (Array.isArray(r[unwrap])) {
+        chunk = r[unwrap] as T[];
+      }
+    }
+    if (chunk.length === 0) {
+      if (Array.isArray(res)) {
+        chunk = res as T[];
+      } else if (isRecord(res)) {
+        const r = res as Record<string, unknown>;
+        if (Array.isArray(r.items)) {
+          chunk = r.items as T[];
+        }
+      }
+    }
     if (!chunk?.length) break;
     results.push(...chunk);
     if (chunk.length < pageSize) break;

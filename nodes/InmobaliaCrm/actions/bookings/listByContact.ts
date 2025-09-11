@@ -21,7 +21,7 @@ export async function listBookingsByContact(
           .map((s) => s.trim())
           .filter(Boolean)
       : [sort.trim()];
-    (filters as any).sort = items;
+    filters['sort'] = items;
   }
 
   const rows = await paginateAll<IDataObject>({
@@ -35,4 +35,3 @@ export async function listBookingsByContact(
 
   return rows;
 }
-

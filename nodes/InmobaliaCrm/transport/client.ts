@@ -14,7 +14,7 @@ export function createClient(context: Context): HttpClient {
   return {
     async request<T>(options: IHttpRequestOptions): Promise<T> {
       try {
-        const response = await (context.helpers as any).httpRequestWithAuthentication!.call(
+        const response = await (context as IExecuteFunctions).helpers.httpRequestWithAuthentication!.call(
           context,
           'inmobaliaCrmOAuth2Api',
           {
@@ -25,7 +25,7 @@ export function createClient(context: Context): HttpClient {
         );
         return response as T;
       } catch (error) {
-        throw new NodeApiError((context as any).getNode(), error as unknown as JsonObject);
+        throw new NodeApiError((context as IExecuteFunctions).getNode(), error as unknown as JsonObject);
       }
     },
 

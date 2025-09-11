@@ -16,7 +16,7 @@ export async function listBookings(this: IExecuteFunctions, client: HttpClient, 
           .map((s) => s.trim())
           .filter(Boolean)
       : [sort.trim()];
-    (filters as any).sort = items;
+    filters['sort'] = items;
   }
 
   // Ensure date-only values are passed as date part if user provided dateTime
@@ -26,7 +26,7 @@ export async function listBookings(this: IExecuteFunctions, client: HttpClient, 
     if (typeof val === 'string' && val) {
       // Extract YYYY-MM-DD
       const datePart = val.split('T')[0];
-      (filters as any)[key] = datePart;
+      filters[key] = datePart;
     }
   }
 
@@ -41,4 +41,3 @@ export async function listBookings(this: IExecuteFunctions, client: HttpClient, 
 
   return rows;
 }
-
