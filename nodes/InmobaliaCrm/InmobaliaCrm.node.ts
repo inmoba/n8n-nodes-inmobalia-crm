@@ -14,6 +14,9 @@ import { bookingsFields, bookingsOperations } from './descriptions'
 import { usersFields, usersOperations } from './descriptions'
 import { webLeadsFields, webLeadsOperations } from './descriptions'
 import { locationsFields, locationsOperations } from './descriptions'
+import { eventsFields, eventsOperations } from './descriptions'
+import { enquiriesFields, enquiriesOperations } from './descriptions'
+import { salesFields, salesOperations } from './descriptions'
 
 // Actions (contacts)
 import { listContacts } from './actions/contacts/list'
@@ -78,6 +81,18 @@ import { listAreasByCity } from './actions/locations/listAreasByCity'
 import { getSubarea } from './actions/locations/getSubarea'
 import { listSubareasByArea } from './actions/locations/listSubareasByArea'
 
+// Actions (events)
+import { listEvents } from './actions/events/list'
+import { getEvent } from './actions/events/get'
+
+// Actions (enquiries)
+import { listEnquiries } from './actions/enquiries/list'
+import { getEnquiry } from './actions/enquiries/get'
+
+// Actions (sales)
+import { listSales } from './actions/sales/list'
+import { getSale } from './actions/sales/get'
+
 export class InmobaliaCrm implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Inmobalia CRM',
@@ -108,8 +123,11 @@ export class InmobaliaCrm implements INodeType {
 				options: [
 					{ name: 'Booking', value: 'bookings' },
 					{ name: 'Contact', value: 'contacts' },
+					{ name: 'Enquiry', value: 'enquiries' },
+					{ name: 'Event', value: 'events' },
 					{ name: 'Location', value: 'locations' },
 					{ name: 'Property', value: 'properties' },
+					{ name: 'Sale', value: 'sales' },
 					{ name: 'User', value: 'users' },
 					{ name: 'Web Lead', value: 'webLeads' },
 				],
@@ -129,6 +147,12 @@ export class InmobaliaCrm implements INodeType {
 			...webLeadsFields,
 			...locationsOperations,
 			...locationsFields,
+			...eventsOperations,
+			...eventsFields,
+			...enquiriesOperations,
+			...enquiriesFields,
+			...salesOperations,
+			...salesFields,
 		],
 	}
 
@@ -375,6 +399,45 @@ export class InmobaliaCrm implements INodeType {
 				else if (operation === 'listSubareasByArea') {
 					const rows = await listSubareasByArea.call(this, client, 0)
 					for (const r of rows) returnData.push({ json: r })
+				}
+				else {
+					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)
+				}
+			}
+			else if (resource === 'events') {
+				if (operation === 'list') {
+					const rows = await listEvents.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'get') {
+					const r = await getEvent.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else {
+					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)
+				}
+			}
+			else if (resource === 'enquiries') {
+				if (operation === 'list') {
+					const rows = await listEnquiries.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'get') {
+					const r = await getEnquiry.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else {
+					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)
+				}
+			}
+			else if (resource === 'sales') {
+				if (operation === 'list') {
+					const rows = await listSales.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'get') {
+					const r = await getSale.call(this, client, 0)
+					returnData.push({ json: r })
 				}
 				else {
 					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)
