@@ -12,17 +12,7 @@ export async function listBookingsByContact(
   const limit: number = this.getNodeParameter('limit', itemIndex, 50);
   const filters: IDataObject = this.getNodeParameter('filters', itemIndex, {});
 
-  // Normalize sort
-  const sort = filters.sort as string | string[] | undefined;
-  if (typeof sort === 'string' && sort.trim() !== '') {
-    const items = sort.includes('|')
-      ? sort
-          .split('|')
-          .map((s) => s.trim())
-          .filter(Boolean)
-      : [sort.trim()];
-    filters.sort = items;
-  }
+  // Sort: allow only a single field as provided; no normalization
 
   const rows = await paginateAll<IDataObject>({
     client,

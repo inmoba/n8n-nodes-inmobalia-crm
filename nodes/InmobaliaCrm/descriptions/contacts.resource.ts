@@ -138,9 +138,9 @@ export const contactsFields: INodeProperties[] = [
         displayName: 'Sort',
         name: 'sort',
         type: 'string',
-        placeholder: 'property,(asc|desc) | use | to separate multiple',
+        placeholder: 'property,(asc|desc)',
         default: '',
-        description: 'Sorting criteria. For multiple, separate items with |, e.g., "createdDate,desc|ID,asc".',
+        description: 'Single sorting criteria, e.g., "createdDate,desc"',
       },
       {
         displayName: 'To Date Created',

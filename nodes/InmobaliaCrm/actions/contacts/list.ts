@@ -8,14 +8,7 @@ export async function listContacts(this: IExecuteFunctions, client: HttpClient, 
 	const limit: number = this.getNodeParameter('limit', itemIndex, 50);
 	const filters: IDataObject = this.getNodeParameter('filters', itemIndex, {});
 
-	// Normalize sort: if provided as comma-separated string turn into array
-	const sort = filters.sort as string | string[] | undefined;
-	if (typeof sort === 'string' && sort.trim() !== '') {
-		const items = sort.includes('|')
-			? sort.split('|').map((s) => s.trim()).filter(Boolean)
-			: [sort.trim()];
-    filters.sort = items;
-  }
+  // Sort: allow only a single field as provided; no normalization
 
   // Normalize dates per OpenAPI (all date-time)
   const normalized = normalizeDateParams(filters, {
