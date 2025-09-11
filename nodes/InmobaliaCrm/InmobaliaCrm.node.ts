@@ -11,6 +11,7 @@ import { NodeApiError, NodeConnectionType, NodeOperationError } from 'n8n-workfl
 import { createClient } from './transport/client';
 import { contactsFields, contactsOperations } from './descriptions';
 import { propertiesFields, propertiesOperations } from './descriptions';
+import { bookingsFields, bookingsOperations } from './descriptions';
 
 // Actions (contacts)
 import { listContacts } from './actions/contacts/list';
@@ -44,6 +45,15 @@ import { getPropertyFeatureByCode } from './actions/properties/getFeatureByCode'
 import { listPropertyCategories } from './actions/properties/listCategories';
 import { getPropertyCategory } from './actions/properties/getCategory';
 
+// Actions (bookings)
+import { listBookings } from './actions/bookings/list';
+import { getBooking } from './actions/bookings/get';
+import { listBookingsByProperty } from './actions/bookings/listByProperty';
+import { listBookingsByContact } from './actions/bookings/listByContact';
+import { getBookingByCode } from './actions/bookings/getByCode';
+import { getBookingCheckIn } from './actions/bookings/getCheckIn';
+import { getBookingCheckOut } from './actions/bookings/getCheckOut';
+
 export class InmobaliaCrm implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Inmobalia CRM',
@@ -74,6 +84,7 @@ export class InmobaliaCrm implements INodeType {
         options: [
           { name: 'Contact', value: 'contacts' },
           { name: 'Property', value: 'properties' },
+          { name: 'Booking', value: 'bookings' },
         ],
         default: 'contacts',
       },
@@ -83,6 +94,8 @@ export class InmobaliaCrm implements INodeType {
       ...contactsFields,
       ...propertiesOperations,
       ...propertiesFields,
+      ...bookingsOperations,
+      ...bookingsFields,
     ],
   };
 
@@ -188,6 +201,31 @@ export class InmobaliaCrm implements INodeType {
           for (const r of rows as IDataObject[]) returnData.push({ json: r });
         } else if (operation === 'getCategory') {
           const r = await getPropertyCategory.call(this, client, 0);
+          returnData.push({ json: r as IDataObject });
+        } else {
+          throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`);
+        }
+      } else if (resource === 'bookings') {
+        if (operation === 'list') {
+          const rows = await listBookings.call(this, client, 0);
+          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+        } else if (operation === 'get') {
+          const r = await getBooking.call(this, client, 0);
+          returnData.push({ json: r as IDataObject });
+        } else if (operation === 'listByProperty') {
+          const rows = await listBookingsByProperty.call(this, client, 0);
+          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+        } else if (operation === 'listByContact') {
+          const rows = await listBookingsByContact.call(this, client, 0);
+          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+        } else if (operation === 'getByCode') {
+          const r = await getBookingByCode.call(this, client, 0);
+          returnData.push({ json: r as IDataObject });
+        } else if (operation === 'getCheckIn') {
+          const r = await getBookingCheckIn.call(this, client, 0);
+          returnData.push({ json: r as IDataObject });
+        } else if (operation === 'getCheckOut') {
+          const r = await getBookingCheckOut.call(this, client, 0);
           returnData.push({ json: r as IDataObject });
         } else {
           throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`);
