@@ -7,7 +7,8 @@ n8n nodes for integrating with the Inmobalia CRM real estate platform.
 ## Features
 - OAuth2 authentication with Inmobalia CRM
 - Base HTTP Request node for making custom API calls
-- Ready to extend with custom nodes for real estate workflows
+- Inmobalia CRM node with Contacts resource (list, get, files, additional addresses, lead status, sources, tags)
+- Ready to extend with more resources and operations
 
 ## Installation
 
@@ -19,16 +20,24 @@ There you will find detailed instructions to safely install and manage community
 
 ## Credentials
 
-This package provides OAuth2 credentials to connect to the Inmobalia CRM API and a base HTTP Request node, allowing you to make custom requests to any endpoint of the Inmobalia CRM API from your n8n workflows. Configure the credentials in n8n with your `Client ID` and `Client Secret` provided by Inmobalia.
+This package provides OAuth2 credentials to connect to the Inmobalia CRM API, a base HTTP Request node for custom calls, and a dedicated Inmobalia CRM node with the Contacts resource. Configure the credentials in n8n with your `Client ID` and `Client Secret` provided by Inmobalia.
 
 See the API documentation for more details about available endpoints: [Inmobalia CRM Swagger](https://api-crm.inmobalia.com/docs/swagger-ui)
 
 ## Usage
 
-This package provides authentication and a base HTTP Request node so you can add custom nodes for your Inmobalia CRM workflows.
+This package provides authentication, a base HTTP Request node, and a dedicated Inmobalia CRM node for Contacts.
 
 1. Go to the credentials section in n8n and create a new credential "Inmobalia CRM OAuth2 API".
-2. Use the credential created in the previous step in either the "Inmobalia CRM" or the base "HTTP Request" nodes to make API calls
+2. Use the credential created in the previous step in either the dedicated "Inmobalia CRM" node (Contacts resource) or the base "HTTP Request" node to make API calls.
+3. In the "Inmobalia CRM" node select the Contacts resource and choose an operation:
+   - list (with returnAll/limit and filters)
+   - get
+   - list files
+   - list additional addresses
+   - list lead status
+   - list sources
+   - list tags
 
 ## Resources
 - [Inmobalia CRM API Docs](https://api-crm.inmobalia.com/docs/swagger-ui)
