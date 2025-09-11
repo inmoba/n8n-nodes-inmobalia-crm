@@ -1,6 +1,6 @@
 {
   "name": "@inmoba/n8n-nodes-inmobalia-crm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "N8N nodes for integrating with the Inmobalia CRM real estate platform.",
   "keywords": [
     "n8n-community-node-package",
@@ -24,10 +24,10 @@
   "scripts": {
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
-    "format": "prettier credentials --write",
-    "lint": "eslint credentials package.json",
-    "lintfix": "eslint credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js credentials package.json"
+    "format": "prettier credentials nodes --write",
+    "lint": "eslint credentials nodes package.json",
+    "lintfix": "eslint credentials nodes package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js credentials nodes package.json"
   },
   "files": [
     "dist"
@@ -37,15 +37,17 @@
     "credentials": [
       "dist/credentials/InmobaliaCrmOAuth2Api.credentials.js"
     ],
-    "nodes": []
+    "nodes": [
+      "dist/nodes/InmobaliaCrm/InmobaliaCrm.node.js"
+    ]
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "~8.33.0",
-    "eslint": "^8.57.1",
-    "eslint-plugin-n8n-nodes-base": "^1.16.3",
-    "gulp": "^5.0.0",
-    "prettier": "^3.5.3",
-    "typescript": "^5.8.3"
+    "@typescript-eslint/parser": "8.43.0",
+    "eslint": "8.57.1",
+    "eslint-plugin-n8n-nodes-base": "1.16.3",
+    "gulp": "5.0.1",
+    "prettier": "3.6.2",
+    "typescript": "5.9.2"
   },
   "peerDependencies": {
     "n8n-workflow": "*"

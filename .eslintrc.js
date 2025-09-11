@@ -26,8 +26,6 @@ module.exports = {
 			plugins: ['eslint-plugin-n8n-nodes-base'],
 			extends: ['plugin:n8n-nodes-base/community'],
 			rules: {
-				'n8n-nodes-base/community-package-json-name-still-default': 'off',
-				'n8n-nodes-base/community-package-json-n8n-nodes-empty': 'off',
 			},
 		},
 		{
