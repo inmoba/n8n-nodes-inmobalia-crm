@@ -58,7 +58,7 @@ export class InmobaliaCrmOAuth2Api implements ICredentialType {
 			displayName: 'Scope',
 			name: 'scope',
 			type: 'string',
-			default: `${scopes.join(' ')}`,
+			default: scopes.join(' '),
 			required: true,
 		},
 		{

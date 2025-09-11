@@ -21,7 +21,7 @@ export async function listBookingsByProperty(
           .map((s) => s.trim())
           .filter(Boolean)
       : [sort.trim()];
-    filters['sort'] = items;
+    filters.sort = items;
   }
 
   const rows = await paginateAll<IDataObject>({

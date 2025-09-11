@@ -16,7 +16,7 @@ export async function listBookings(this: IExecuteFunctions, client: HttpClient, 
           .map((s) => s.trim())
           .filter(Boolean)
       : [sort.trim()];
-    filters['sort'] = items;
+    filters.sort = items;
   }
 
   // Ensure date-only values are passed as date part if user provided dateTime

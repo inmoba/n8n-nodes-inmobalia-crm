@@ -1,6 +1,5 @@
 import type {
   IExecuteFunctions,
-  IDataObject,
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
@@ -109,29 +108,29 @@ export class InmobaliaCrm implements INodeType {
     const returnData: INodeExecutionData[] = [];
     const client = createClient(this);
 
-    const resource = this.getNodeParameter('resource', 0) as string;
-    const operation = this.getNodeParameter('operation', 0) as string;
+    const resource = this.getNodeParameter('resource', 0);
+    const operation = this.getNodeParameter('operation', 0);
 
     try {
       if (resource === 'contacts') {
         if (operation === 'list') {
           const rows = await listContacts.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'get') {
           const r = await getContact.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listFiles') {
           const rows = await listContactFiles.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'listAdditionals') {
           const rows = await listContactAdditionals.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'listTags') {
           const rows = await listContactTags.call(this, client);
           for (const r of rows as unknown as string[]) returnData.push({ json: { value: r } });
         } else if (operation === 'listSources') {
           const rows = await listContactSources.call(this, client);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'listLeadStatus') {
           const rows = await listContactLeadStatus.call(this, client);
           for (const r of rows as unknown as string[]) returnData.push({ json: { value: r } });
@@ -141,92 +140,92 @@ export class InmobaliaCrm implements INodeType {
       } else if (resource === 'properties') {
         if (operation === 'list') {
           const rows = await listProperties.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'get') {
           const r = await getProperty.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'getByReference') {
           const r = await getPropertyByReference.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listFiles') {
           const rows = await listPropertyFiles.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getFile') {
           const r = await getPropertyFile.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listImages') {
           const rows = await listPropertyImages.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getImage') {
           const r = await getPropertyImage.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listLinks') {
           const rows = await listPropertyLinks.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getLink') {
           const r = await getPropertyLink.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listDescriptions') {
           const rows = await listPropertyDescriptions.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getDescription') {
           const r = await getPropertyDescription.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listHtmls') {
           const rows = await listPropertyHtmls.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getHtml') {
           const r = await getPropertyHtml.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listTags') {
           const rows = await listPropertyTags.call(this, client);
           for (const r of rows as unknown as string[]) returnData.push({ json: { value: r } });
         } else if (operation === 'listTypes') {
           const rows = await listPropertyTypes.call(this, client);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getType') {
           const r = await getPropertyType.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listFeatures') {
           const rows = await listPropertyFeatures.call(this, client);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'listCustomFeatures') {
           const rows = await listPropertyCustomFeatures.call(this, client);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getFeatureByCode') {
           const r = await getPropertyFeatureByCode.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listCategories') {
           const rows = await listPropertyCategories.call(this, client);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getCategory') {
           const r = await getPropertyCategory.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else {
           throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`);
         }
       } else if (resource === 'bookings') {
         if (operation === 'list') {
           const rows = await listBookings.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'get') {
           const r = await getBooking.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'listByProperty') {
           const rows = await listBookingsByProperty.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'listByContact') {
           const rows = await listBookingsByContact.call(this, client, 0);
-          for (const r of rows as IDataObject[]) returnData.push({ json: r });
+          for (const r of rows) returnData.push({ json: r });
         } else if (operation === 'getByCode') {
           const r = await getBookingByCode.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'getCheckIn') {
           const r = await getBookingCheckIn.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else if (operation === 'getCheckOut') {
           const r = await getBookingCheckOut.call(this, client, 0);
-          returnData.push({ json: r as IDataObject });
+          returnData.push({ json: r });
         } else {
           throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`);
         }

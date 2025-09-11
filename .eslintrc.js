@@ -143,13 +143,21 @@ module.exports = {
 		},
 		{
 			files: ['./**/*.ts'],
-			extends: ['plugin:@typescript-eslint/recommended'],
+			extends: [
+				'plugin:@typescript-eslint/strict-type-checked',
+				'plugin:@typescript-eslint/stylistic-type-checked',
+			],
 			plugins: ['@typescript-eslint'],
 			parser: '@typescript-eslint/parser',
 			parserOptions: {
 				projectService: true,
 				tsconfigRootDir: __dirname,
 			},
+			rules: {
+				"@typescript-eslint/restrict-template-expressions": ["error", {
+					allowNumber: true
+				}]
+			}
 		},
 	],
 };

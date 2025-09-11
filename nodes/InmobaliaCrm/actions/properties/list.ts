@@ -16,7 +16,7 @@ export async function listProperties(this: IExecuteFunctions, client: HttpClient
           .map((s) => s.trim())
           .filter(Boolean)
       : [sort.trim()];
-    filters['sort'] = items;
+    filters.sort = items;
   }
 
   // Normalize statusPublish (array of strings)
@@ -26,7 +26,7 @@ export async function listProperties(this: IExecuteFunctions, client: HttpClient
       .split('|')
       .map((s) => s.trim())
       .filter(Boolean);
-    filters['statusPublish'] = items;
+    filters.statusPublish = items;
   }
 
   const rows = await paginateAll<IDataObject>({

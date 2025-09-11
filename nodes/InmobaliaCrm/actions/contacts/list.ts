@@ -2,7 +2,7 @@ import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import type { HttpClient } from '../../transport/client';
 import { paginateAll } from '../../transport/pagination';
 
-export async function listContacts(this: IExecuteFunctions, client: HttpClient, itemIndex = 0) {
+export async function listContacts(this: IExecuteFunctions, client: HttpClient, itemIndex = 0): Promise<IDataObject[]> {
 	const returnAll: boolean = this.getNodeParameter('returnAll', itemIndex, false);
 	const limit: number = this.getNodeParameter('limit', itemIndex, 50);
 	const filters: IDataObject = this.getNodeParameter('filters', itemIndex, {});
@@ -13,7 +13,7 @@ export async function listContacts(this: IExecuteFunctions, client: HttpClient, 
 		const items = sort.includes('|')
 			? sort.split('|').map((s) => s.trim()).filter(Boolean)
 			: [sort.trim()];
-		filters['sort'] = items;
+		filters.sort = items;
 	}
 
 	const rows = await paginateAll<IDataObject>({

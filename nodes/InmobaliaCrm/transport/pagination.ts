@@ -29,12 +29,12 @@ export async function paginateAll<T = unknown>(params: PaginateAllParams): Promi
   });
 
   if (!returnAll) {
-    const target = Math.max(1, Number(limit ?? 50));
+    const target = Math.max(1, limit ?? 50);
     while (results.length < target) {
-      const res = await client.get<unknown>(path, buildQs());
+      const res = await client.get<T>(path, buildQs());
       let chunk: T[] = [];
       if (unwrap && isRecord(res)) {
-        const r = res as Record<string, unknown>;
+        const r = res;
         if (Array.isArray(r[unwrap])) {
           chunk = r[unwrap] as T[];
         }
@@ -43,13 +43,13 @@ export async function paginateAll<T = unknown>(params: PaginateAllParams): Promi
         if (Array.isArray(res)) {
           chunk = res as T[];
         } else if (isRecord(res)) {
-          const r = res as Record<string, unknown>;
+          const r = res;
           if (Array.isArray(r.items)) {
             chunk = r.items as T[];
           }
         }
       }
-      if (!chunk?.length) break;
+      if (!chunk.length) break;
       for (const row of chunk) {
         results.push(row);
         if (results.length >= target) break;
@@ -66,10 +66,10 @@ export async function paginateAll<T = unknown>(params: PaginateAllParams): Promi
   const maxPages = 500;
   let pages = 0;
   while (pages < maxPages) {
-    const res = await client.get<unknown>(path, buildQs());
+    const res = await client.get<T>(path, buildQs());
     let chunk: T[] = [];
     if (unwrap && isRecord(res)) {
-      const r = res as Record<string, unknown>;
+      const r = res;
       if (Array.isArray(r[unwrap])) {
         chunk = r[unwrap] as T[];
       }
@@ -78,13 +78,13 @@ export async function paginateAll<T = unknown>(params: PaginateAllParams): Promi
       if (Array.isArray(res)) {
         chunk = res as T[];
       } else if (isRecord(res)) {
-        const r = res as Record<string, unknown>;
+        const r = res;
         if (Array.isArray(r.items)) {
           chunk = r.items as T[];
         }
       }
     }
-    if (!chunk?.length) break;
+    if (!chunk.length) break;
     results.push(...chunk);
     if (chunk.length < pageSize) break;
     page += 1;
