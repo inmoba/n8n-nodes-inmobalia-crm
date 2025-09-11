@@ -142,18 +142,21 @@ module.exports = {
 			},
 		},
 		{
-			files: ['./**/*.ts'],
+			files: ['./**/*.{ts,js}'],
 			extends: [
+				'plugin:@stylistic/recommended-extends',
 				'plugin:@typescript-eslint/strict-type-checked',
 				'plugin:@typescript-eslint/stylistic-type-checked',
 			],
-			plugins: ['@typescript-eslint'],
+			plugins: ['@typescript-eslint', '@stylistic'],
 			parser: '@typescript-eslint/parser',
 			parserOptions: {
 				projectService: true,
 				tsconfigRootDir: __dirname,
 			},
 			rules: {
+				'@stylistic/no-tabs': ['error', { allowIndentationTabs: true }],
+				'@stylistic/indent': ['error', 'tab'],
 				"@typescript-eslint/restrict-template-expressions": ["error", {
 					allowNumber: true
 				}]
