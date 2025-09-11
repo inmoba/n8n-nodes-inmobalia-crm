@@ -1,3 +1,6 @@
 export * from './contacts.resource'
 export * from './properties.resource'
 export * from './bookings.resource'
+export * from './users.resource'
+export * from './webLeads.resource'
+export * from './locations.resource'

@@ -1,4 +1,10 @@
-import type { IExecuteFunctions, ILoadOptionsFunctions, IHttpRequestOptions, IDataObject, JsonObject } from 'n8n-workflow'
+import type {
+	IExecuteFunctions,
+	ILoadOptionsFunctions,
+	IHttpRequestOptions,
+	IDataObject,
+	JsonObject,
+} from 'n8n-workflow'
 import { NodeApiError } from 'n8n-workflow'
 
 const BASE_URL = 'https://api-crm.inmobalia.com/v1'
@@ -14,20 +20,24 @@ export function createClient(context: Context): HttpClient {
 	return {
 		async request<T>(options: IHttpRequestOptions): Promise<T> {
 			try {
-				const response = await (context as IExecuteFunctions).helpers
-					.httpRequestWithAuthentication.call<Context, [string, IHttpRequestOptions], Promise<T>>(
-						context,
-						'inmobaliaCrmOAuth2Api',
-						{
-							baseURL: BASE_URL,
-							json: true,
-							...options,
-						} as IHttpRequestOptions,
-					)
+				const response = await (
+					context as IExecuteFunctions
+				).helpers.httpRequestWithAuthentication.call<
+					Context,
+					[string, IHttpRequestOptions],
+					Promise<T>
+				>(context, 'inmobaliaCrmOAuth2Api', {
+					baseURL: BASE_URL,
+					json: true,
+					...options,
+				} as IHttpRequestOptions)
 				return response
 			}
 			catch (error) {
-				throw new NodeApiError((context as IExecuteFunctions).getNode(), error as unknown as JsonObject)
+				throw new NodeApiError(
+					(context as IExecuteFunctions).getNode(),
+					error as unknown as JsonObject,
+				)
 			}
 		},
 

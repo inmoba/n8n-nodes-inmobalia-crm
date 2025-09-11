@@ -11,6 +11,9 @@ import { createClient } from './transport/client'
 import { contactsFields, contactsOperations } from './descriptions'
 import { propertiesFields, propertiesOperations } from './descriptions'
 import { bookingsFields, bookingsOperations } from './descriptions'
+import { usersFields, usersOperations } from './descriptions'
+import { webLeadsFields, webLeadsOperations } from './descriptions'
+import { locationsFields, locationsOperations } from './descriptions'
 
 // Actions (contacts)
 import { listContacts } from './actions/contacts/list'
@@ -53,6 +56,28 @@ import { getBookingByCode } from './actions/bookings/getByCode'
 import { getBookingCheckIn } from './actions/bookings/getCheckIn'
 import { getBookingCheckOut } from './actions/bookings/getCheckOut'
 
+// Actions (users)
+import { listUsers } from './actions/users/list'
+import { getUser } from './actions/users/get'
+import { getMe } from './actions/users/getMe'
+
+// Actions (web leads)
+import { listWebLeads } from './actions/webLeads/list'
+import { getWebLead } from './actions/webLeads/get'
+
+// Actions (locations)
+import { listCountries } from './actions/locations/listCountries'
+import { getCountry } from './actions/locations/getCountry'
+import { getCountryByIso } from './actions/locations/getCountryByIso'
+import { getProvince } from './actions/locations/getProvince'
+import { listProvincesByCountry } from './actions/locations/listProvincesByCountry'
+import { getCity } from './actions/locations/getCity'
+import { listCitiesByProvince } from './actions/locations/listCitiesByProvince'
+import { getArea } from './actions/locations/getArea'
+import { listAreasByCity } from './actions/locations/listAreasByCity'
+import { getSubarea } from './actions/locations/getSubarea'
+import { listSubareasByArea } from './actions/locations/listSubareasByArea'
+
 export class InmobaliaCrm implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Inmobalia CRM',
@@ -81,9 +106,12 @@ export class InmobaliaCrm implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Contact', value: 'contacts' },
-					{ name: 'Property', value: 'properties' },
 					{ name: 'Booking', value: 'bookings' },
+					{ name: 'Contact', value: 'contacts' },
+					{ name: 'Location', value: 'locations' },
+					{ name: 'Property', value: 'properties' },
+					{ name: 'User', value: 'users' },
+					{ name: 'Web Lead', value: 'webLeads' },
 				],
 				default: 'contacts',
 			},
@@ -95,6 +123,12 @@ export class InmobaliaCrm implements INodeType {
 			...propertiesFields,
 			...bookingsOperations,
 			...bookingsFields,
+			...usersOperations,
+			...usersFields,
+			...webLeadsOperations,
+			...webLeadsFields,
+			...locationsOperations,
+			...locationsFields,
 		],
 	}
 
@@ -262,6 +296,85 @@ export class InmobaliaCrm implements INodeType {
 				else if (operation === 'getCheckOut') {
 					const r = await getBookingCheckOut.call(this, client, 0)
 					returnData.push({ json: r })
+				}
+				else {
+					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)
+				}
+			}
+			else if (resource === 'users') {
+				if (operation === 'list') {
+					const rows = await listUsers.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'get') {
+					const r = await getUser.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else if (operation === 'getMe') {
+					const r = await getMe.call(this, client)
+					returnData.push({ json: r })
+				}
+				else {
+					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)
+				}
+			}
+			else if (resource === 'webLeads') {
+				if (operation === 'list') {
+					const rows = await listWebLeads.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'get') {
+					const r = await getWebLead.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else {
+					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)
+				}
+			}
+			else if (resource === 'locations') {
+				if (operation === 'listCountries') {
+					const rows = await listCountries.call(this, client)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'getCountry') {
+					const r = await getCountry.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else if (operation === 'getCountryByIso') {
+					const r = await getCountryByIso.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else if (operation === 'getProvince') {
+					const r = await getProvince.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else if (operation === 'listProvincesByCountry') {
+					const rows = await listProvincesByCountry.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'getCity') {
+					const r = await getCity.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else if (operation === 'listCitiesByProvince') {
+					const rows = await listCitiesByProvince.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'getArea') {
+					const r = await getArea.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else if (operation === 'listAreasByCity') {
+					const rows = await listAreasByCity.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
+				}
+				else if (operation === 'getSubarea') {
+					const r = await getSubarea.call(this, client, 0)
+					returnData.push({ json: r })
+				}
+				else if (operation === 'listSubareasByArea') {
+					const rows = await listSubareasByArea.call(this, client, 0)
+					for (const r of rows) returnData.push({ json: r })
 				}
 				else {
 					throw new NodeOperationError(this.getNode(), `Unsupported operation: ${operation}`)

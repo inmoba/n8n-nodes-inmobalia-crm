@@ -62,7 +62,10 @@ export interface NormalizeDateParamsSpec {
  * - Removes empty string values
  * - Applies ISO 8601 formatting for date/date-time keys
  */
-export function normalizeDateParams<T extends IDataObject>(obj: T, spec: NormalizeDateParamsSpec): T {
+export function normalizeDateParams<T extends IDataObject>(
+	obj: T,
+	spec: NormalizeDateParamsSpec,
+): T {
 	const { dateKeys = [], dateTimeKeys = [] } = spec
 	const out: IDataObject = {}
 
