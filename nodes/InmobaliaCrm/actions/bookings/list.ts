@@ -1,6 +1,7 @@
 import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import type { HttpClient } from '../../transport/client';
 import { paginateAll } from '../../transport/pagination';
+import { normalizeDateParams } from '../../utils/dates';
 
 export async function listBookings(this: IExecuteFunctions, client: HttpClient, itemIndex = 0) {
   const returnAll: boolean = this.getNodeParameter('returnAll', itemIndex, false);
@@ -19,21 +20,16 @@ export async function listBookings(this: IExecuteFunctions, client: HttpClient, 
     filters.sort = items;
   }
 
-  // Ensure date-only values are passed as date part if user provided dateTime
-  const dateOnlyKeys = ['fromDateStart', 'toDateStart', 'fromDateEnd', 'toDateEnd'] as const;
-  for (const key of dateOnlyKeys) {
-    const val = filters[key] as string | undefined;
-    if (typeof val === 'string' && val) {
-      // Extract YYYY-MM-DD
-      const datePart = val.split('T')[0];
-      filters[key] = datePart;
-    }
-  }
+  // Normalize dates per OpenAPI (mix of date and date-time)
+  const normalized = normalizeDateParams(filters, {
+    dateKeys: ['fromDateStart', 'toDateStart', 'fromDateEnd', 'toDateEnd'],
+    dateTimeKeys: ['fromDateCreated', 'toDateCreated', 'fromDateModified', 'toDateModified'],
+  });
 
   const rows = await paginateAll<IDataObject>({
     client,
     path: '/bookings',
-    qs: filters,
+    qs: normalized,
     unwrap: 'content',
     returnAll,
     limit,

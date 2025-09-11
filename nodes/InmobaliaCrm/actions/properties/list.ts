@@ -1,6 +1,7 @@
 import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import type { HttpClient } from '../../transport/client';
 import { paginateAll } from '../../transport/pagination';
+import { normalizeDateParams } from '../../utils/dates';
 
 export async function listProperties(this: IExecuteFunctions, client: HttpClient, itemIndex = 0) {
   const returnAll: boolean = this.getNodeParameter('returnAll', itemIndex, false);
@@ -29,10 +30,15 @@ export async function listProperties(this: IExecuteFunctions, client: HttpClient
     filters.statusPublish = items;
   }
 
+  // Normalize dates per OpenAPI (all date-time)
+  const normalized = normalizeDateParams(filters, {
+    dateTimeKeys: ['fromDateCreated', 'toDateCreated', 'fromDateModified', 'toDateModified'],
+  });
+
   const rows = await paginateAll<IDataObject>({
     client,
     path: '/properties',
-    qs: filters,
+    qs: normalized,
     unwrap: 'content',
     returnAll,
     limit,
