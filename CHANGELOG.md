@@ -4,6 +4,17 @@ All notable changes to this project are documented in this file.
 
 This project follows Semantic Versioning. Entries are grouped by type using Keep a Changelog conventions.
 
+## [1.1.1] - 2025-09-12
+
+### Added
+- Enable node to be used as a Tool in n8n (`usableAsTool: true`).
+
+### Chore
+- Bumped package version to 1.1.1.
+
+### Breaking Changes
+- None.
+
 ## [1.1.0] - 2025-09-11
 
 ### Added
@@ -36,4 +47,3 @@ This project follows Semantic Versioning. Entries are grouped by type using Keep
 ## [1.0.0]
 
 - Initial release.
-
