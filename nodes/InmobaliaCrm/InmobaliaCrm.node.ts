@@ -102,6 +102,7 @@ export class InmobaliaCrm implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Interact with Inmobalia CRM API',
+		usableAsTool: true,
 		defaults: {
 			name: 'Inmobalia CRM',
 		},
