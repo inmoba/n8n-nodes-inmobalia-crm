@@ -6,7 +6,7 @@ services:
       - "5678:5678"
     environment:
       # Básico de n8n
-      - N8N_HOST=n8n.sparra.inmoba
+      - N8N_HOST=n8n.inmoba.local
       - N8N_PROTOCOL=http
       - N8N_PORT=5678
       - GENERIC_TIMEZONE=Europe/Madrid

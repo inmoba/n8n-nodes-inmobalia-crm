@@ -20,20 +20,21 @@
     "type": "git",
     "url": "git+https://github.com/inmoba/n8n-nodes-inmobalia-crm.git"
   },
-  "main": "index.js",
   "scripts": {
-    "build": "tsc && gulp build:icons",
-    "dev": "tsc --watch",
-    "format": "prettier credentials nodes --write",
-    "lint": "eslint credentials nodes package.json",
-    "lintfix": "eslint credentials nodes package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js credentials nodes package.json"
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "prepublishOnly": "npm run lint && npm run build"
   },
   "files": [
     "dist"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
+    "strict": true,
     "credentials": [
       "dist/credentials/InmobaliaCrmOAuth2Api.credentials.js"
     ],
@@ -42,14 +43,11 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "8.43.0",
-    "@typescript-eslint/eslint-plugin": "8.43.0",
-    "@stylistic/eslint-plugin": "3.1.0",
-    "eslint": "8.57.1",
-    "eslint-plugin-n8n-nodes-base": "1.16.3",
-    "gulp": "5.0.1",
+    "@n8n/node-cli": "*",
+    "eslint": "9.37.0",
     "prettier": "3.6.2",
-    "typescript": "5.9.2"
+    "release-it": "^19.0.5",
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
     "n8n-workflow": "*"

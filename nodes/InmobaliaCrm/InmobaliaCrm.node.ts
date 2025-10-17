@@ -8,15 +8,26 @@ import type {
 import { NodeApiError, NodeConnectionType, NodeOperationError } from 'n8n-workflow'
 
 import { createClient } from './transport/client'
-import { contactsFields, contactsOperations } from './descriptions'
-import { propertiesFields, propertiesOperations } from './descriptions'
-import { bookingsFields, bookingsOperations } from './descriptions'
-import { usersFields, usersOperations } from './descriptions'
-import { webLeadsFields, webLeadsOperations } from './descriptions'
-import { locationsFields, locationsOperations } from './descriptions'
-import { eventsFields, eventsOperations } from './descriptions'
-import { enquiriesFields, enquiriesOperations } from './descriptions'
-import { salesFields, salesOperations } from './descriptions'
+import {
+	contactsFields,
+	contactsOperations,
+	propertiesFields,
+	propertiesOperations,
+	bookingsFields,
+	bookingsOperations,
+	usersFields,
+	usersOperations,
+	webLeadsFields,
+	webLeadsOperations,
+	locationsFields,
+	locationsOperations,
+	eventsFields,
+	eventsOperations,
+	enquiriesFields,
+	enquiriesOperations,
+	salesFields,
+	salesOperations,
+} from './descriptions'
 
 // Actions (contacts)
 import { listContacts } from './actions/contacts/list'
