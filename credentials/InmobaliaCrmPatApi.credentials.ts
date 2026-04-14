@@ -34,7 +34,7 @@ export class InmobaliaCrmPatApi implements ICredentialType {
 		type: 'generic',
 		properties: {
 			headers: {
-				Authorization: '=bearer {{$credentials?.accessToken}}',
+				Authorization: '=Bearer {{$credentials?.accessToken}}',
 			},
 		},
 	}
