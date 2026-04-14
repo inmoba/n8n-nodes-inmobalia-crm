@@ -1,4 +1,5 @@
 import type { Icon, ICredentialType, INodeProperties } from 'n8n-workflow'
+import { INMOBALIA_API_BASE_URL } from '../nodes/InmobaliaCrm/transport/client';
 
 const scopes = [
 	'activities:read',
@@ -16,6 +17,13 @@ const scopes = [
 	'web-leads:write',
 ]
 
+const httpRequestNode: ICredentialType['httpRequestNode'] = {
+	name: 'Inmobalia CRM',
+	docsUrl: 'https://api-crm.inmobalia.com/docs/swagger-ui',
+	apiBaseUrl: INMOBALIA_API_BASE_URL,
+	hidden: true,
+}
+
 export class InmobaliaCrmOAuth2Api implements ICredentialType {
 	name = 'inmobaliaCrmOAuth2Api'
 
@@ -27,11 +35,7 @@ export class InmobaliaCrmOAuth2Api implements ICredentialType {
 
 	icon: Icon = 'file:inmobalia-crm.svg'
 
-	httpRequestNode = {
-		name: 'Inmobalia CRM',
-		docsUrl: 'https://api-crm.inmobalia.com/docs/swagger-ui',
-		apiBaseUrl: 'https://api-crm.inmobalia.com/v1/',
-	}
+	httpRequestNode = httpRequestNode
 
 	properties: INodeProperties[] = [
 		{

@@ -1,0 +1,31 @@
+{
+	"node": "n8n-nodes-inmobalia-crm",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": [
+		"Productivity",
+		"Marketing & Content",
+		"Sales",
+		"Utility"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://api-crm.inmobalia.com/docs/swagger-ui/index.html"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://api-crm.inmobalia.com/docs/swagger-ui/index.html"
+			}
+		]
+	},
+	"alias": [
+		"inmobalia",
+		"inmobaliacrm",
+		"inmobalia-crm",
+		"inmobalia crm",
+		"inmoba networks",
+		"inmoba"
+	]
+}

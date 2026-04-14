@@ -36,7 +36,8 @@
     "n8nNodesApiVersion": 1,
     "strict": true,
     "credentials": [
-      "dist/credentials/InmobaliaCrmOAuth2Api.credentials.js"
+      "dist/credentials/InmobaliaCrmOAuth2Api.credentials.js",
+      "dist/credentials/InmobaliaCrmPatApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/InmobaliaCrm/InmobaliaCrm.node.js"
