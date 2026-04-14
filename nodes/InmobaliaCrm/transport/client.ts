@@ -24,7 +24,7 @@ export function createClient(context: Context): HttpClient {
 				const authenticationMethod = context.getNodeParameter(
 					'authentication',
 					0,
-					'accessToken',
+					'oAuth2',
 				);
 				const credentialType = authenticationMethod === 'accessToken' ? 'inmobaliaCrmPatApi' : 'inmobaliaCrmOAuth2Api';
 
