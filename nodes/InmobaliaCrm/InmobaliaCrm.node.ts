@@ -121,11 +121,41 @@ export class InmobaliaCrm implements INodeType {
 		outputs: [NodeConnectionType.Main],
 		credentials: [
 			{
+				name: 'inmobaliaCrmPatApi',
+				required: true,
+				displayOptions: {
+					show: {
+						authentication: ['accessToken'],
+					},
+				},
+			},
+			{
 				name: 'inmobaliaCrmOAuth2Api',
 				required: true,
+				displayOptions: {
+					show: {
+						authentication: ['oAuth2'],
+					},
+				},
 			},
 		],
 		properties: [
+			{
+				displayName: 'Authentication',
+				name: 'authentication',
+				type: 'options',
+				options: [
+					{
+						name: 'Access Token',
+						value: 'accessToken',
+					},
+					{
+						name: 'OAuth2',
+						value: 'oAuth2',
+					},
+				],
+				default: 'oAuth2',
+			},
 			// Resource selector
 			{
 				displayName: 'Resource',
