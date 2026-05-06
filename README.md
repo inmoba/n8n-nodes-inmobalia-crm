@@ -5,13 +5,10 @@
 n8n nodes for integrating with the Inmobalia CRM real estate platform.
 
 ## Features
-- OAuth2 authentication with Inmobalia CRM
-- Base HTTP Request node for making custom API calls
-- Inmobalia CRM node with:
-  - Contacts: list, get, files, additional addresses, lead status, sources, tags
-  - Properties (all GET operations): list, get, get by reference, files (list/get), images (list/get), links (list/get), descriptions (list/get), HTMLs (list/get), tags (list), types (list/get), features (list), custom features (list), feature by code (get), categories (list/get)
-  - Bookings (all GET operations): list (with filters), get by ID, get by code, list by property, list by contact, get check‑in event, get check‑out event
-- Ready to extend with more resources and operations
+
+- OAuth2 and Personal Access Token (PAT) authentication
+- Dedicated Inmobalia CRM node covering all CRM resources
+- Automatically stays up-to-date via the node
 
 ## Installation
 
@@ -23,36 +20,27 @@ There you will find detailed instructions to safely install and manage community
 
 ## Credentials
 
-This package provides OAuth2 credentials to connect to the Inmobalia CRM API and a dedicated Inmobalia CRM node for Contacts, Properties and Bookings. Configure the credentials in n8n with your `Client ID` and `Client Secret` provided by Inmobalia.
+This package provides two credential types for the Inmobalia CRM API:
 
-See the API documentation for more details about available endpoints: [Inmobalia CRM Swagger](https://api-crm.inmobalia.com/docs/swagger-ui)
+- **Inmobalia CRM OAuth2 API**: For OAuth2 authorization code flow
+- **Inmobalia CRM API**: For Personal Access Token (PAT) authentication
+
+Choose the method that best suits your integration needs. Both credential types are also available when using n8n's built-in HTTP Request node under the **Inmobalia CRM** application credentials.
+
+Configure your chosen credential in n8n with your `Client ID` and `Client Secret` (OAuth2) or your `Access Token` (PAT) provided by Inmobalia.
+
+See the API documentation for more details: [Inmobalia CRM Swagger](https://api-crm.inmobalia.com/docs/swagger-ui)
 
 ## Usage
 
-1. Go to the credentials section in n8n and create a new credential `Inmobalia CRM OAuth2 API`.
-2. Use the credential in the `Inmobalia CRM` node. Choose a Resource and Operation.
-3. Supported resources and operations:
-   - Contacts: list (with returnAll/limit and filters), get, list files, list additional addresses, list lead status, list sources, list tags
-   - Properties:
-     - Listings: list (with returnAll/limit and filters: date created/modified range, country ISO, publish status, sort)
-     - Single property: get by ID, get by reference
-     - Files: list files, get file
-     - Images: list images, get image
-     - Links: list links, get link
-     - Descriptions: list descriptions, get description by language
-     - HTMLs: list HTML snippets, get HTML snippet
-     - Taxonomies: tags (list), types (list/get), categories (list/get)
-     - Features: features (list), custom features (list), feature by code (get)
-   - Bookings:
-     - Listings: list (with returnAll/limit and filters: from/to date created, from/to date modified, from/to date start, from/to date end, sort)
-     - Single booking: get by ID, get by code
-     - Related: list by property ID, list by contact ID
-     - Events: get check‑in event, get check‑out event
+1. Create a credential in n8n (OAuth2 or PAT)
+2. Add an `Inmobalia CRM` node to your workflow
+3. Select a resource and operation - the node handles the rest
 
-Notes:
-- For bookings, the start/end date filters in the UI accept date-time values but only the date part (YYYY‑MM‑DD) is sent to the API.
+All available resources and operations are exposed directly in the node UI. For the full list, refer to the API documentation.
 
 ## Resources
+
 - [Inmobalia CRM API Docs](https://api-crm.inmobalia.com/docs/swagger-ui)
 - [n8n Documentation](https://docs.n8n.io/)
 - [GitHub Repository](https://github.com/inmoba/n8n-nodes-inmobalia-crm)
