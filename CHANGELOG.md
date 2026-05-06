@@ -4,6 +4,26 @@ All notable changes to this project are documented in this file.
 
 This project follows Semantic Versioning. Entries are grouped by type using Keep a Changelog conventions.
 
+## [1.2.0] - 2026-05-06
+
+### Added
+- Inmobalia CRM API credentials with support for Personal Access Token (PAT) authentication.
+- `authentication` parameter in node to select between OAuth2 or PAT authentication method.
+
+### Changed
+- Updated transport client to support both OAuth2 and PAT authentication methods.
+- Fixed Authorization header casing in Inmobalia CRM API credentials.
+
+### Documentation
+- Updated README with PAT authentication instructions and simplified usage.
+
+### Chore
+- Updated to use @n8n/node-cli.
+- Bumped package version to 1.2.0.
+
+### Breaking Changes
+- None.
+
 ## [1.1.1] - 2025-09-12
 
 ### Added
